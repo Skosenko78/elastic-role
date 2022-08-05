@@ -1,14 +1,21 @@
 ---
-  - name: Upload tar.gz Elasticsearch from remote URL
-    get_url:
-      url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz"
+  - name: Upload tar.gz Elasticsearch from local storage
+    copy:
+      src: "elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz"
       dest: "/tmp/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz"
-      mode: 0755
-      timeout: 60
-      force: true
     register: get_elastic
     until: get_elastic is succeeded
     tags: elastic
+  #- name: Upload tar.gz Elasticsearch from remote URL
+  #  get_url:
+  #    url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz"
+  #    dest: "/tmp/elasticsearch-{{ elastic_version }}-linux-x86_64.tar.gz"
+  #    mode: 0755
+  #    timeout: 60
+   #   force: true
+   # register: get_elastic
+   # until: get_elastic is succeeded
+   # tags: elastic
   - name: Create directrory for Elasticsearch
     file:
       state: directory
